@@ -540,35 +540,35 @@ class blow{
     }
 
     public static String blowfish_decryption() {
-        String left = pt.substring(0,32);
-        String right = pt.substring(32,64);
+        String left = pt.substring(0, 32);
+        String right = pt.substring(32, 64);
         String new_text = round(left, right, 17);
-        int j=16;
-        while(j>1) {
-            left = new_text.substring(0,32);
-            right = new_text.substring(32,64);
+        int j = 16;
+        while (j > 1) {
+            left = new_text.substring(0, 32);
+            right = new_text.substring(32, 64);
             new_text = round(left, right, j);
             j--;
         }
-        left = new_text.substring(32,64);
-        right = new_text.substring(0,32);
+        left = new_text.substring(32, 64);
+        right = new_text.substring(0, 32);
         left = XOR(left, K[0]);
         right = XOR(right, K[1]);
         new_text = left.concat(right);
         return new_text;
     }
 
-    public static String round(String left, String right, int i){
+    public static String round(String left, String right, int i) {
         String result = XOR(left, K[i]);
         String SBox_0 = SBox(result.substring(0, 8), 0);
         String SBox_1 = SBox(result.substring(8, 16), 1);
         String SBox_2 = SBox(result.substring(16, 24), 2);
         String SBox_3 = SBox(result.substring(24, 32), 3);
-        String m1 = addition_mod(SBox_0,SBox_1);
+        String m1 = addition_mod(SBox_0, SBox_1);
         String m2 = XOR(m1, SBox_2);
         String m3 = addition_mod(SBox_3, m2);
         left = XOR(m3, right);
-        right= result;
+        right = result;
         String new_text = left.concat(right);
         return new_text;
     }
